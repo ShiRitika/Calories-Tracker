@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Calories Tracker</title>
+    <link href="style.css" rel="stylesheet" />
+    <!--linking css-->
+
+    <script
+  src="https://code.jquery.com/jquery-3.6.1.min.js"
+  integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
+  crossorigin="anonymous"></script><!--linking jQuery file with CDN-->
+
+
+  </head>
+  <body>
+    <div class="format1">
+      <h1 style="text-align: center">Track Your Calories</h1>
+      <h2 style="font-size: 25px; margin-bottom: 0px">
+        Timmer :
+        <p id="countdown">00:00:00</p>
+      </h2>
+    </div>
+
+    <form>
+      <div id="img">
+      <img src="https://cdn-icons-png.flaticon.com/512/2316/2316949.png" alt="Trulli" width="100" height="100">
+      </div>
+      <tr>
+        <th><strong>Meal List:</strong></th>
+        <td name="forms" id="container1">
+          <input type="radio" id="breakfast" name="meal" value="Breakfast" />
+          <label for="meal">Breakfast</label>
+          <input type="radio" id="lunch" name="meal" value="Lunch" />
+          <label for="meal">Lunch</label>
+          <input type="radio" id="dinner" name="meal" value="Dinner" />
+          <label for="meal">Dinner</label>
+        </td>
+      </tr>
+      <div id="cal1">
+        <strong>Calories:</strong
+        ><input id="cal2" type="number" placeholder="calories" />
+        <p id="invalid"></p>
+      </div>
+      <div id="des">
+        <h4>Description</h4>
+        <textarea id="text" rows="3" cols="30"> </textarea>
+      </div>
+
+      <div>
+        <strong>Time:</strong>
+        <select id="time">
+          <option value="00:00">12.00 AM</option>
+          <option value="00:30">12.30 AM</option>
+          <option value="01:00">01.00 AM</option>
+          <option value="01:30">01.30 AM</option>
+          <option value="02:00">02.00 AM</option>
+          <option value="02:30">02.30 AM</option>
+          <option value="03:00">03.00 AM</option>
+          <option value="03:30">03.30 AM</option>
+          <option value="04:00">04.00 AM</option>
+          <option value="04:30">04.30 AM</option>
+          <option value="05:00">05.00 AM</option>
+          <option value="05:30">05.30 AM</option>
+          <option value="06:00">06.00 AM</option>
+          <option value="06:30">06.30 AM</option>
+          <option value="07:00">07.00 AM</option>
+          <option value="07:30">07.30 AM</option>
+          <option value="08:00">08.00 AM</option>
+          <option value="08:30">08.30 AM</option>
+          <option value="09:00">09.00 AM</option>
+          <option value="09:30">09.30 AM</option>
+          <option value="10:00">10.00 AM</option>
+          <option value="10:30">10.30 AM</option>
+          <option value="11:00">11.00 AM</option>
+          <option value="11:30">11.30 AM</option>
+          <option value="12:00">12.00 PM</option>
+          <option value="12:30">12.30 PM</option>
+          <option value="13:00">01.00 PM</option>
+          <option value="13:30">01.30 PM</option>
+          <option value="14:00">02.00 PM</option>
+          <option value="14:30">02.30 PM</option>
+          <option value="15:00">03.00 PM</option>
+          <option value="15:30">03.30 PM</option>
+          <option value="16:00">04.00 PM</option>
+          <option value="16:30">04.30 PM</option>
+          <option value="17:00">05.00 PM</option>
+          <option value="17:30">05.30 PM</option>
+          <option value="18:00">06.00 PM</option>
+          <option value="18:30">06.30 PM</option>
+          <option value="19:00">07.00 PM</option>
+          <option value="19:30">07.30 PM</option>
+          <option value="20:00">08.00 PM</option>
+          <option value="20:30">08.30 PM</option>
+          <option value="21:00">09.00 PM</option>
+          <option value="21:30">09.30 PM</option>
+          <option value="22:00">10.00 PM</option>
+          <option value="22:30">10.30 PM</option>
+          <option value="23:00">11.00 PM</option>
+          <option value="23:30">11.30 PM</option>
+        </select>
+      </div>
+      <br />
+      <div id="button">
+        <input id="btn3" type="submit" value="Reset" />
+        <input id="btn4" type="reset" value="Submit" />
+      </div>
+    </form>
+    <div id="summary">
+    <h2>Summary</h2>
+    </div>
+    <table id="tb">
+      <tr>
+        <th id="meal">Meal Type</th>
+        <th id="cal">Calories</th>
+        <th id="des">Description</th>
+        <th id="tim">Time</th>
+        <th>View</th>
+        <th>Edit</th>
+        <th>Delete</th>
+      </tr>
+    </table>
+    <div id="showdata"></div>
+<!--modal box-->  
+  
+  <div id="myModal" class="modal">
+    <div class="modal-content">
+        <span class="close-button">&times;</span>
+        <h1>Summary</h1>
+        <div class="modal-body">
+          <table id="td2">
+              <thead>
+                  <tr>
+                      <th>Meal Type</th>
+                      <th>Calories</th>
+                      <th>Description</th>
+                      <th>Time</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr id="tr">
+                      <td>{modaldata.meal_type}</td>
+                      <td>{modaldata.calories}</td>
+                      <td>{modaldata.description}</td>
+                      <td>{modaldata.time}</td>
+                  </tr>
+              </tbody>
+          </table>
+      </div>
+
+    </div>
+</div>
+
+
+    <script src="script.js"></script>
+    <!--linking js-->
+  </body>
+</html>
