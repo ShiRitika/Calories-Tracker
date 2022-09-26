@@ -4,11 +4,11 @@
     <title>Calories Tracker</title>
     <link href="style.css" rel="stylesheet" />
     <!--linking css-->
-
+<!--
     <script
   src="https://code.jquery.com/jquery-3.6.1.min.js"
   integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
-  crossorigin="anonymous"></script><!--linking jQuery file with CDN-->
+  crossorigin="anonymous"></script>linking jQuery file with CDN-->
 
 
   </head>
@@ -127,23 +127,13 @@
         <span class="close-button">&times;</span>
         <h1>Summary</h1>
         <div class="modal-body">
-          <table id="td2">
-              <thead>
+          <table id="modalTable">
                   <tr>
                       <th>Meal Type</th>
                       <th>Calories</th>
                       <th>Description</th>
                       <th>Time</th>
                   </tr>
-              </thead>
-              <tbody>
-                  <tr id="tr">
-                      <td>{modaldata.meal_type}</td>
-                      <td>{modaldata.calories}</td>
-                      <td>{modaldata.description}</td>
-                      <td>{modaldata.time}</td>
-                  </tr>
-              </tbody>
           </table>
       </div>
 

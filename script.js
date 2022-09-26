@@ -25,8 +25,8 @@ setInterval(updateCountDown, 1000); // set interval time of 1 sec
 
 
 var row = null;//global variables
-//code for submit
 let result = [];
+//code for submit
 const addResult = (event) => {
   event.preventDefault(); //to stop the form submittig
 
@@ -38,8 +38,8 @@ const addResult = (event) => {
       str += meal[i].value + " ";
     }
   }
-
-  checkData()
+  
+  checkData() //calling func to check the data
   //storing data into object form
   let data = {
     meal_type: str,
@@ -47,7 +47,13 @@ const addResult = (event) => {
     description: document.getElementById("text").value,
     time: document.getElementById("time").value
   };
-  result.push(data);
+  
+  if(selectedIndex === -1){//code for edit nd update
+    result.push(data);
+  } else{
+    result.splice(selectedIndex,1,data);
+  }
+  // result.push(data);
   document.forms[0].reset(); //to clear the form for the next entries
   //document.querySelector('form').reset();
 
@@ -57,27 +63,25 @@ const addResult = (event) => {
 
   //getting data from local storage
   var data2 = localStorage.getItem('MyList');
-  console.log(data2);
+  // console.log(data2);
   var json_object = JSON.parse(data2);
-  console.log(json_object);
+  // console.log(json_object);
 
     if(json_object.length){ //getting array data which is selected 
       var y = json_object[json_object.length - 1];
     }
-  
-
+    
     //if data in show table or update
     if(row == null){
       showData();
     } else {
-      update(y);
+      update(json_object);
     }
     
     //function to show data in table 
     function showData(){
     var table = document.getElementById("tb");//get html table
     var data3 = y;
-    //console.log(data3);
     var row = table.insertRow();//add new empty row in table
     var cell1 = row.insertCell(0);
     var cell2 = row.insertCell(1);
@@ -147,6 +151,7 @@ function checkData(){
 }
 }
 
+
 //code for reset 
 var btnClear = document.getElementById("btn3");
 btnClear.addEventListener("click", function deleteItems() {
@@ -154,66 +159,98 @@ btnClear.addEventListener("click", function deleteItems() {
 }
 );
 
-//code for edit option selected abd show entry in input field
+//code for edit option selected row show entry in input field
+var selectedIndex =-1;
 function onEditPressed(index){
+  selectedIndex = -1;
   row = index.parentElement.parentElement;
   document.getElementsByName("meal").value= row.cells[0].innerHTML;
   document.getElementById("cal2").value = row.cells[1].innerHTML;
   document.getElementById("text").value = row.cells[2].innerHTML;
   document.getElementById("time").value = row.cells[3].innerHTML;
+  var indexRow = row.rowIndex - 1; //find index of row
+  // console.log(indexRow);
+  selectedIndex = indexRow;
+  var v = JSON.parse(localStorage.getItem('MyList'));//find the array from local storage
+  //  console.log(v);
+   v.splice(indexRow, 1);
+   localStorage.setItem('MyList', JSON.stringify(v));
 }
-
+// var selectedIndex = -1;
 //code to update table records on edit option
 function update(formData){
-  row.cells[0].innerHTML =formData.meal_type;
-  row.cells[1].innerHTML = formData.calories;
-  row.cells[2].innerHTML = formData.description;
-  row.cells[3].innerHTML = formData.time;
+  var indexRow = row.rowIndex - 1;
+  var updateData = formData[indexRow];
+  // console.log(updateData); 
+  row.cells[0].innerHTML =updateData.meal_type;
+  row.cells[1].innerHTML = updateData.calories;
+  row.cells[2].innerHTML = updateData.description;
+  row.cells[3].innerHTML = updateData.time;
   row = null;
 }
 
 
 const modal = document.querySelector(".modal");//taking modal box
-const trigger = document.querySelector(".trigger");// sselecting button
 const closeButton = document.querySelector(".close-button");//span element selected here
 
 function toggleModal(view) { //when click on view button this passed as argument to view parameter
-  //console.log(view);
+
   var row = view.parentElement.parentElement; // getting parent data
- // console.log(row);
- // var modal = document.getElementById("myModal");
+  // console.log(row);
+  var index = row.rowIndex - 1; //getting index of data
+  // console.log(index);
+  var dataLocal = JSON.parse(localStorage.getItem('MyList'));//find the array from local storage
+  // console.log(dataLocal);
+  var obj_index = dataLocal[index];//find the obj from local storage of that index
+  // console.log(obj_index);
+  
+  var modal = document.getElementById("myModal");
+  var modaltable = document.getElementById("modalTable")
+  // console.log(modal);
 
-  $(document).ready(function(){ //code in jquery to insert values of table to modal box
-    $('#tr').empty(); //table row get empty
-    $('#td2').append(row); // insert row values to table
-   });
-   
-   modal.classList.toggle("show-modal"); // display modal box
-}
-
-function windowOnClick(event) {
-    if (event.target === modal) {
-      modal.style.display= "none";
+  removeRow();//calling function to remove modal data row for next entry
+//function for deleting privious row in modal table
+  function removeRow(){
+    if(index >= 1){
+      document.getElementById("modalTable").deleteRow(1);
+    } else {
+      return modaltable;
     }
-}
+  }
 
+  var row = modaltable.insertRow();//inserting new row in a table
+  var cell1 = row.insertCell(0);//inserting cells
+  var cell2 = row.insertCell(1);
+  var cell3 = row.insertCell(2);
+  var cell4 = row.insertCell(3);
+
+    cell1.innerHTML = obj_index.meal_type;//inserting values to each cell
+    cell2.innerHTML = obj_index.calories;
+    cell3.innerHTML = obj_index.description;
+    cell4.innerHTML = obj_index.time; 
+   
+  modal.classList.toggle("show-modal"); // display modal box
+  //  modal.style.display = "block";
+}
 
 // When the user clicks on <span> (x), close the modal
 closeButton.onclick = function() {
-  modal.style.display = "none";
+  // modal.style.display = "none";
+  modal.classList.toggle("show-modal");
 }
-
-//trigger.addEventListener("click", toggleModal);
-closeButton.addEventListener("click", toggleModal);
-window.addEventListener("click", windowOnClick);
 
 //code for delete button in a table
 function onDelete(td){
-  row = td.parentElement.parentElement;
-  document.getElementById("tb").deleteRow(row.rowIndex);
-  resetform();
-  localStorage.removeItem("MyList", JSON.stringify(result));
-}
+  row = td.parentElement.parentElement; //find row
+   var index = row.rowIndex - 1;//find the index of the row
+   var dataLocal = JSON.parse(localStorage.getItem('MyList'));//find the array from local storage
+   var objLocal = dataLocal[index];//find the obj from local storage of that index
+   dataLocal.splice(objLocal, 1);// remove that perticular index entry 
+   localStorage.setItem('MyList', JSON.stringify(dataLocal));//save getdata back to local storage
+   document.getElementById("tb").deleteRow(row.rowIndex);//delete row from UI
+   resetform();
+  }
+
 //when delete data form get reset
 function resetform(){
   document.getElementsByName("meal").checked = false;
