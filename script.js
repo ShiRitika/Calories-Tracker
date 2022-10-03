@@ -1,6 +1,6 @@
 "use stricts";
 
-//code for clock(Timmer)
+//-----------------code for clock(Timmer)--------------------------
 const countDownElement = document.getElementById("countdown"); //DOM Manupulation for countdown
 function updateCountDown() {
   let date = new Date();
@@ -30,7 +30,7 @@ let result = [];
 const addResult = (event) => {
   event.preventDefault(); //to stop the form submittig
 
-  //code for meal input
+  //---------------code for meal input-----------------------------------
   var meal = document.getElementsByName("meal");
   var str = " ";
   for (let i = 0; i < meal.length; i++) {
@@ -39,6 +39,7 @@ const addResult = (event) => {
     }
   }
   
+
   checkData() //calling func to check the data
   //storing data into object form
   let data = {
@@ -113,11 +114,13 @@ function checkData(){
   if (document.getElementById("breakfast").checked) {
     var cal = document.getElementById("cal2").value;
     let error = document.getElementById("invalid");
+    debugger;
     if(cal < 300 ) {
+      debugger;
       error.textContent = "Range Between 300-700";
     } else if(cal > 700){
       error.textContent = "Range Betweeen 300-700";
-    } else {
+     } else {
     error.textContent = " ";
   }
   valid = true;
@@ -127,9 +130,9 @@ function checkData(){
   let error = document.getElementById("invalid");
   if (cal < 700 ) {
     error.textContent = "Range Between 700-900";
-  } else if(cal > 900){
+    } else if(cal > 900){
     error.textContent = "Range Between 700-900";
-  } else {
+     } else {
     error.textContent = " ";
   }
   valid = true;
@@ -139,9 +142,9 @@ function checkData(){
   let error = document.getElementById("invalid");
   if (cal < 700 ) {
     error.textContent = "Range Between 700-900";
-  } else if(cal > 900){
+   } else if(cal > 900){
     error.textContent = "Range Between 700-900";
-  } else {
+     } else {
     error.textContent = " ";
   }
   valid= true;
@@ -152,19 +155,32 @@ function checkData(){
 }
 
 
-//code for reset 
+//-------------code for reset--------------------- 
 var btnClear = document.getElementById("btn3");
 btnClear.addEventListener("click", function deleteItems() {
   localStorage.clear();
 }
 );
 
-//code for edit option selected row show entry in input field
+//---------------code for edit option selected row show entry in input field---------------
 var selectedIndex =-1;
 function onEditPressed(index){
   selectedIndex = -1;
   row = index.parentElement.parentElement;
-  document.getElementsByName("meal").value= row.cells[0].innerHTML;
+
+  let Value1 = row.cells[0].innerHTML; //getting meal value from table cell
+  // console.log(Value1);
+  let Value = Value1.trim(); //value has whitespace se we need to trim it for further comarison
+  var meal_List = document.getElementsByName('meal'); //getting meal list
+
+    if(meal_List[0].value === Value){ //checking if meal value===meal_list value
+      meal_List[0].checked = Value;
+    } else if(meal_List[1].value === Value){
+      meal_List[1].checked = Value;
+    } else if(meal_List[2].value === Value){
+      meal_List[2].checked = Value;
+    }
+
   document.getElementById("cal2").value = row.cells[1].innerHTML;
   document.getElementById("text").value = row.cells[2].innerHTML;
   document.getElementById("time").value = row.cells[3].innerHTML;
@@ -189,7 +205,7 @@ function update(formData){
   row = null;
 }
 
-
+//------------------------code for viewing model box----------------------------------
 const modal = document.querySelector(".modal");//taking modal box
 const closeButton = document.querySelector(".close-button");//span element selected here
 
@@ -239,7 +255,7 @@ closeButton.onclick = function() {
   modal.classList.toggle("show-modal");
 }
 
-//code for delete button in a table
+//-----------------code for delete button in a table----------------------------------
 function onDelete(td){
   row = td.parentElement.parentElement; //find row
    var index = row.rowIndex - 1;//find the index of the row
@@ -251,7 +267,7 @@ function onDelete(td){
    resetform();
   }
 
-//when delete data form get reset
+//----------------------when delete data form get reset-----------------------------------
 function resetform(){
   document.getElementsByName("meal").checked = false;
   document.getElementById("cal2").value = "";
