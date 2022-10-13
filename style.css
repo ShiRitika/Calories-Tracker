@@ -14,16 +14,16 @@ body{
 /*class selector in css*/
 .format1{
     border: 2px;
-    background-color: blue;
+    background-color: #0083ff;
     font-size: larger;
     color: white;
 }
 /*id selector in css*/
 #countdown{
-    margin-top: 0px;
-    font-size: 25px;
-    background-color:blue;
-    display: inline-flex;
+    margin-bottom: 0px;
+    font-size: 22px;
+    background-color: #0083ff;
+    text-align: right;
 }
 
 #container1{
@@ -37,9 +37,7 @@ body{
 
 }
 
-#button{
-    text-align: center;
-}
+
 
 #message{
     text-align: center;
@@ -48,13 +46,6 @@ body{
     text-align: center;
 }
 
-form{
-    background-color:cornflowerblue;
-    margin-left: 100px;
-    margin-right:100px ;
-    
-
-}
 #img{
 width: 100px;
 height: 100px;
@@ -73,6 +64,8 @@ width: 200px;
     /* margin-bottom: 0px; */
     color: #fee6e3;
     margin-bottom: 10px;
+    font-size:19px;
+    letter-spacing:1px;
 
 }
 
@@ -83,6 +76,7 @@ table{
     margin:0px auto;
     background-color:aquamarine;
 }
+
 th{
     border: 1px solid black;
     border-collapse: collapse;
@@ -160,14 +154,20 @@ td{
   position: relative;
   text-align: center;
 }
+
+#button{
+    text-align: center;
+margin-left: 150px;
+}
+
 #btn3 , #btn4{
+    margin-top: 40px;
     background-image: linear-gradient(144deg,#170cb4, #5B42F3 50%,#00DDEB);
-    /* border: 1px; */
     border-radius: 8px;
     box-sizing: border-box;
     color: #FFFFFF;
     font-family: Phantomsans, sans-serif;
-    font-size: 18px;
+    font-size: 16px;
     justify-content: center;
     line-height: 1em;
     max-width: 100%;
@@ -175,3 +175,103 @@ td{
     padding: 3px;
   }
  
+/*---------------------code for form container start---------------------- */
+.container{
+    margin-top: 40px;
+    margin-left:250px ;
+    margin-right: 250px;
+    z-index: 1;
+    width: 800px;
+    background-color: #98b6da;
+    border-radius: 15px;
+    box-shadow: 0 3px 25px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+}
+
+
+#table0 {
+    line-height:35px;
+    background-color: #98b6da;
+}
+
+.contact-firstcol { 
+    color: #0f0d36;
+    font-weight: bold; 
+    width:120px;
+    font-size:19px;
+    letter-spacing:1px;
+    border:1px solid #98b6da;
+}  
+
+.contact-secondcol {
+    color:#0e0d0d;
+    width:50px;
+    text-align:center;
+    font-size:22px;
+    border:1px solid #98b6da;
+}
+
+.contact-thirdcol {
+    width:400px;
+    padding-left:20px;
+    border:1px solid #98b6da;
+}
+
+.form textarea {   
+    width: 250px;  
+    max-width: 250px;  
+    height: 100px;
+    max-height:100px;
+    line-height: 150%;
+}
+
+/*------------------ code for form container end-------------*/
+
+
+
+
+/*-------- code for table and modal table------ */
+#tb{
+    border-spacing: 0px;
+    width: 850px;
+    margin-left: 220px;
+}
+
+#tb td, #tb th{
+    padding: .60em;
+    vertical-align: top;
+    text-align: center;
+    border-top: 1px solid var(--border);
+}
+
+#tb tr:hover{
+    background-color: #06d6a0;
+}
+
+
+#tb th ,#modalTable th{
+    color: rgb(255, 255, 255);
+    background-color: #0083ff;
+    border: color #000305;
+}
+
+
+#modalTable{
+    border-spacing: 0px;
+    width: 750px;
+}
+
+#modalTable th , #modalTable td{
+    padding: .60em;
+    vertical-align: top;
+    text-align: center;
+    border-top: 1px solid var(--border);
+    margin-top: 5px;
+}
+
+
+.error{
+    color: red;
+    margin: 0px;
+    text-align: left;
+}
