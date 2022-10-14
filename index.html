@@ -2,120 +2,161 @@
 <html lang="en">
   <head>
     <title>Calories Tracker</title>
-    <link href="style.css" rel="stylesheet" />
     <!--linking css-->
+    <link href="style.css" rel="stylesheet" />
+    <!--/linking css-->
   </head>
   <body>
+    <!------------------- header start-------------------->
     <div class="format1">
       <h1 style="text-align: center">Track Your Calories</h1>
       <h2 style="font-size: 25px; margin-bottom: 0px">
         <p id="countdown">00:00:00</p>
       </h2>
     </div>
+    <!------------------- header end-------------------->
+     <!------------ main section start-------------------->
     <div class="container">
-      <form>
+      <div class="form-table-contain">
+        <form action="" onsubmit="return validateForm()">
+          <table id="table0">
+            <tr>
+              <td class="contact-firstcol">Meal List</td>
+              <td class="contact-secondcol">:</td>
+              <td class="contact-thirdcol" name="forms" id="container1">
+                <input type="radio" id="breakfast" name="meal" value="Breakfast"/>
+                <label for="meal" id="B">Breakfast</label>
+                <input type="radio" id="lunch" name="meal" value="Lunch" />
+                <label for="meal" id="L">Lunch</label>
+                <input type="radio" id="dinner" name="meal" value="Dinner" />
+                <label for="meal" id="D">Dinner</label>
+              </td>
+            </tr>
+
+            <tr>
+              <td class="contact-firstcol"></td>
+              <td class="contact-sec_error">:</td>
+              <td class="contact-thirdcol"><p id="invalid_meal" class="error"></p>
+              </td>
+            </tr>
+
+            <tr id="cal1">
+              <td class="contact-firstcol">Calories</td>
+              <td class="contact-secondcol">:</td>
+              <td class="contact-thirdcol">
+                <input id="cal2" type="number" placeholder="calories" />
+              </td>
+            </tr>
+
+            <tr>
+              <td class="contact-firstcol"></td>
+              <td class="contact-sec_error">:</td>
+              <td class="contact-thirdcol">
+                <p id="invalid" class="error"></p>
+              </td>
+            </tr>
+
+            <tr id="des">
+              <td class="contact-firstcol">Description</td>
+              <td class="contact-secondcol">:</td>
+              <td class="contact-thirdcol"><textarea id="text"></textarea></td>
+            </tr>
+
+            <tr>
+              <td class="contact-firstcol"></td>
+              <td class="contact-sec_error">:</td>
+              <td class="contact-thirdcol">
+              <p id="invalid_des" class="error"></p>
+              </td>
+            </tr>
+
+            <tr>
+              <td class="contact-firstcol">Time</td>
+              <td class="contact-secondcol">:</td>
+              <td class="contact-thirdcol">
+                <select id="time">
+                  <option value="00:00">12.00 AM</option>
+                  <option value="00:30">12.30 AM</option>
+                  <option value="01:00">01.00 AM</option>
+                  <option value="01:30">01.30 AM</option>
+                  <option value="02:00">02.00 AM</option>
+                  <option value="02:30">02.30 AM</option>
+                  <option value="03:00">03.00 AM</option>
+                  <option value="03:30">03.30 AM</option>
+                  <option value="04:00">04.00 AM</option>
+                  <option value="04:30">04.30 AM</option>
+                  <option value="05:00">05.00 AM</option>
+                  <option value="05:30">05.30 AM</option>
+                  <option value="06:00">06.00 AM</option>
+                  <option value="06:30">06.30 AM</option>
+                  <option value="07:00">07.00 AM</option>
+                  <option value="07:30">07.30 AM</option>
+                  <option value="08:00">08.00 AM</option>
+                  <option value="08:30">08.30 AM</option>
+                  <option value="09:00">09.00 AM</option>
+                  <option value="09:30">09.30 AM</option>
+                  <option value="10:00">10.00 AM</option>
+                  <option value="10:30">10.30 AM</option>
+                  <option value="11:00">11.00 AM</option>
+                  <option value="11:30">11.30 AM</option>
+                  <option value="12:00">12.00 PM</option>
+                  <option value="12:30">12.30 PM</option>
+                  <option value="13:00">01.00 PM</option>
+                  <option value="13:30">01.30 PM</option>
+                  <option value="14:00">02.00 PM</option>
+                  <option value="14:30">02.30 PM</option>
+                  <option value="15:00">03.00 PM</option>
+                  <option value="15:30">03.30 PM</option>
+                  <option value="16:00">04.00 PM</option>
+                  <option value="16:30">04.30 PM</option>
+                  <option value="17:00">05.00 PM</option>
+                  <option value="17:30">05.30 PM</option>
+                  <option value="18:00">06.00 PM</option>
+                  <option value="18:30">06.30 PM</option>
+                  <option value="19:00">07.00 PM</option>
+                  <option value="19:30">07.30 PM</option>
+                  <option value="20:00">08.00 PM</option>
+                  <option value="20:30">08.30 PM</option>
+                  <option value="21:00">09.00 PM</option>
+                  <option value="21:30">09.30 PM</option>
+                  <option value="22:00">10.00 PM</option>
+                  <option value="22:30">10.30 PM</option>
+                  <option value="23:00">11.00 PM</option>
+                  <option value="23:30">11.30 PM</option>
+                </select>
+              </td>
+            </tr>
+
+            <tr>
+              <td class="contact-firstcol"></td>
+              <td class="contact-sec_error">:</td>
+              <td class="contact-thirdcol">
+              <p id="invalid_time" class="error"></p>
+              </td>
+            </tr>
+          </table>
+
+          <div id="button">
+            <input id="btn3" type="submit" value="Reset" />
+            <input id="btn4" type="reset" value="Submit" />
+          </div>
+        </form>
+      </div>
+    <!----- div for image ----->
+      <div class="image-contain">
         <div id="img">
           <img
             src="https://cdn-icons-png.flaticon.com/512/2316/2316949.png"
             alt="Trulli"
             width="100"
-            height="100"/>
+            height="100"
+          />
         </div>
-
-
-<form action="" onsubmit="return validateForm()">
-        <table id="table0">
-          <tr>
-              <td class="contact-firstcol">Meal List</td>
-              <td class="contact-secondcol"> : </td>
-              <td class="contact-thirdcol" name="forms" id="container1">
-                <input type="radio" id="breakfast" name="meal" value="Breakfast" />
-            <label for="meal" id="B">Breakfast</label>
-            <input type="radio" id="lunch" name="meal" value="Lunch" />
-            <label for="meal" id="L">Lunch</label>
-            <input type="radio" id="dinner" name="meal" value="Dinner" />
-            <label for="meal" id="D">Dinner</label> 
-            <p id="invalid_meal" class="error"></p>
-            </td>
-          </tr>
-
-          <tr id="cal1">
-            <td class="contact-firstcol">Calories</td>
-            <td class="contact-secondcol"> : </td>
-            <td class="contact-thirdcol"> <input id="cal2" type="number" placeholder="calories"/><p id="invalid" class="error"></p> </td>
-        </tr>
-
-        <tr id="des">
-          <td class="contact-firstcol">Description</td>
-          <td class="contact-secondcol"> : </td>
-          <td class="contact-thirdcol"> <textarea id="text"></textarea><p id="invalid_des" class="error"></p> </td>
-      </tr>
-
-      <tr>
-        <td class="contact-firstcol">Time</td>
-        <td class="contact-secondcol"> : </td>
-        <td class="contact-thirdcol"> 
-          <select id="time">
-            <option value="00:00">12.00 AM</option>
-            <option value="00:30">12.30 AM</option>
-            <option value="01:00">01.00 AM</option>
-            <option value="01:30">01.30 AM</option>
-            <option value="02:00">02.00 AM</option>
-            <option value="02:30">02.30 AM</option>
-            <option value="03:00">03.00 AM</option>
-            <option value="03:30">03.30 AM</option>
-            <option value="04:00">04.00 AM</option>
-            <option value="04:30">04.30 AM</option>
-            <option value="05:00">05.00 AM</option>
-            <option value="05:30">05.30 AM</option>
-            <option value="06:00">06.00 AM</option>
-            <option value="06:30">06.30 AM</option>
-            <option value="07:00">07.00 AM</option>
-            <option value="07:30">07.30 AM</option>
-            <option value="08:00">08.00 AM</option>
-            <option value="08:30">08.30 AM</option>
-            <option value="09:00">09.00 AM</option>
-            <option value="09:30">09.30 AM</option>
-            <option value="10:00">10.00 AM</option>
-            <option value="10:30">10.30 AM</option>
-            <option value="11:00">11.00 AM</option>
-            <option value="11:30">11.30 AM</option>
-            <option value="12:00">12.00 PM</option>
-            <option value="12:30">12.30 PM</option>
-            <option value="13:00">01.00 PM</option>
-            <option value="13:30">01.30 PM</option>
-            <option value="14:00">02.00 PM</option>
-            <option value="14:30">02.30 PM</option>
-            <option value="15:00">03.00 PM</option>
-            <option value="15:30">03.30 PM</option>
-            <option value="16:00">04.00 PM</option>
-            <option value="16:30">04.30 PM</option>
-            <option value="17:00">05.00 PM</option>
-            <option value="17:30">05.30 PM</option>
-            <option value="18:00">06.00 PM</option>
-            <option value="18:30">06.30 PM</option>
-            <option value="19:00">07.00 PM</option>
-            <option value="19:30">07.30 PM</option>
-            <option value="20:00">08.00 PM</option>
-            <option value="20:30">08.30 PM</option>
-            <option value="21:00">09.00 PM</option>
-            <option value="21:30">09.30 PM</option>
-            <option value="22:00">10.00 PM</option>
-            <option value="22:30">10.30 PM</option>
-            <option value="23:00">11.00 PM</option>
-            <option value="23:30">11.30 PM</option>
-          </select>
-          <p id="invalid_time" class="error"></p>
-        </td>
-        </tr>
-  </table>
-  <div id="button">
-    <input id="btn3" type="submit" value="Reset" />
-    <input id="btn4" type="reset" value="Submit" />
-  </div>
-</div>
-</form>
- <div id="summary">
+      </div>
+    </div>
+<!--------------------------- main section end---------------------->
+    <!------------------- code for summary part start------------------>
+    <div id="summary">
       <h2>Summary</h2>
     </div>
 
@@ -131,14 +172,16 @@
       </tr>
     </table>
     <tr id="tr">
-    <div id="showdata"></div>
+      <div id="showdata"></div>
     </tr>
-    <!--modal box-->
+    <!-------------------/ code for summary part End--------------------->
+
+    <!-----------------code for modal box star-------------------------->
 
     <div id="myModal" class="modal">
       <div class="modal-content">
         <span class="close-button">&times;</span>
-        <h1 style="text-align:center ;">Summary</h1>
+        <h1 style="text-align: center">Summary</h1>
         <div class="modal-body">
           <table id="modalTable">
             <tr>
@@ -151,8 +194,10 @@
         </div>
       </div>
     </div>
+    <!-----------------/code for modal box End---------------------------->
 
-    <script src="script.js"></script>
     <!--linking js-->
+    <script src="script.js"></script>
+    <!--/linking js-->
   </body>
 </html>
