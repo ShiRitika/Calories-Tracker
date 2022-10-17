@@ -23,7 +23,6 @@ function updateCountDown() {
 updateCountDown(); //calling function
 setInterval(updateCountDown, 1000); // set interval time of 1 sec
 
-
 var row = null; //global variables
 let result = [];
 
@@ -40,9 +39,10 @@ const addResult = (event) => {
     }
   }
   let calories_value = document.getElementById("cal2");
-  let description_value = document.getElementById("text");
+  let description_value = document.getElementById("text").value;
+  console.log(description_value);
   let time_value = document.getElementById("time").value;
-  var r = '00:00';
+  var r = "00:00";
 
   let flag = 1; //set flag 1 so that form will submit
 
@@ -50,48 +50,90 @@ const addResult = (event) => {
 
   //---------------------code for validating form------------------
   function validateForm() {
-
-
-    if (str == "") {
-      document.getElementById("invalid_meal").innerHTML = "Please Select meal!";
-      flag = 0; //set flag 0 to not submit form
-    } else {
-      document.getElementById("invalid_meal").innerHTML = "";
-      flag = 1;
-    }
-    
-    
-    if (calories_value.value == "") {
-      document.getElementById("invalid").innerHTML = "Calories Field is Empty!";
-      flag = 0;
-    } else{
-      document.getElementById("invalid").innerHTML = "";
-      flag = 1;
-    } 
-    
+    checkMeal();
+    checkCalories();
     checkData(); //calling func to check the data
+    checkDescription();
+    checkTime();
 
-    if (description_value.value == "") {
-      document.getElementById("invalid_des").innerHTML = "Description field is Empty!";
+    function checkMeal() {
+      if (str == "") {
+        document.getElementById("invalid_meal").innerHTML =
+          "Please Select meal!";
+        flag = 0; //set flag 0 to not submit form
+      } else {
+        document.getElementById("invalid_meal").innerHTML = "";
+        flag = 1;
+      }
+      if (flag) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+
+    function checkCalories() {
+      if (calories_value.value == "") {
+        document.getElementById("invalid").innerHTML =
+          "Calories Field is Empty!";
+        flag = 0;
+      } else {
+        document.getElementById("invalid").innerHTML = "";
+        flag = 1;
+      }
+      if (flag) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+
+    function checkDescription() {
+      if (description_value == "") {
+        document.getElementById("invalid_des").innerHTML =
+          "Description field is Empty!";
+        flag = 0;
+      } else {
+        document.getElementById("invalid_des").innerHTML = "";
+        flag = 1;
+      }
+      if (flag) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+
+    function checkTime() {
+      if (time_value == r) {
+        document.getElementById("invalid_time").innerHTML =
+          "Please select Time!";
+        flag = 0;
+      } else {
+        document.getElementById("invalid_time").innerHTML = "";
+        flag = 1;
+      }
+      if (flag) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+    //if one of both field flag is 0 form will not submitted
+    if (
+      checkDescription() === false ||
+      checkTime() === false ||
+      checkCalories() === false ||
+      checkData() === false ||
+      checkMeal() === false
+    ) {
       flag = 0;
     } else {
-      document.getElementById("invalid_des").innerHTML = "";
       flag = 1;
     }
-    
-    if (time_value == r) {
-      document.getElementById("invalid_time").innerHTML = "Please select Time!";
-      flag = 0;
-    } else {
-      document.getElementById("invalid_time").innerHTML = "";
-      flag = 1;
-    }
-
-    
 
     //function to print error message for calories value
     function checkData() {
-      
       if (document.getElementById("breakfast").checked) {
         let cal = document.getElementById("cal2").value;
         let error = document.getElementById("invalid");
@@ -149,7 +191,6 @@ const addResult = (event) => {
   breakme: if (flag === 0) {
     break breakme;
   } else {
-
     //storing data into object form
     let data = {
       meal_type: str,
@@ -158,8 +199,7 @@ const addResult = (event) => {
       time: document.getElementById("time").value,
     };
 
-    if (selectedIndex === -1) {
-      //code for edit nd update
+    if (selectedIndex === -1) { //code for edit nd update
       result.push(data);
     } else {
       result.splice(selectedIndex, 1, data);
@@ -173,12 +213,9 @@ const addResult = (event) => {
 
     //getting data from local storage
     var data2 = localStorage.getItem("MyList");
-    // console.log(data2);
     var json_object = JSON.parse(data2);
-    // console.log(json_object);
 
-    if (json_object.length) {
-      //getting array data which is selected
+    if (json_object.length) { //getting array data which is selected
       var y = json_object[json_object.length - 1];
     }
 
@@ -231,12 +268,11 @@ function onEditPressed(index) {
   row = index.parentElement.parentElement;
 
   let Value1 = row.cells[0].innerHTML; //getting meal value from table cell
-  // console.log(Value1);
+
   let Value = Value1.trim(); //value has whitespace se we need to trim it for further comarison
   var meal_List = document.getElementsByName("meal"); //getting meal list
 
   if (meal_List[0].value === Value) {
-    //checking if meal value===meal_list value
     meal_List[0].checked = Value;
   } else if (meal_List[1].value === Value) {
     meal_List[1].checked = Value;
@@ -248,10 +284,10 @@ function onEditPressed(index) {
   document.getElementById("text").value = row.cells[2].innerHTML;
   document.getElementById("time").value = row.cells[3].innerHTML;
   var indexRow = row.rowIndex - 1; //find index of row
-  // console.log(indexRow);
+
   selectedIndex = indexRow;
   var v = JSON.parse(localStorage.getItem("MyList")); //find the array from local storage
-  //  console.log(v);
+  
   v.splice(indexRow, 1);
   localStorage.setItem("MyList", JSON.stringify(v));
 }
@@ -260,7 +296,7 @@ function onEditPressed(index) {
 function update(formData) {
   var indexRow = row.rowIndex - 1;
   var updateData = formData[indexRow];
-  // console.log(updateData);
+
   row.cells[0].innerHTML = updateData.meal_type;
   row.cells[1].innerHTML = updateData.calories;
   row.cells[2].innerHTML = updateData.description;
@@ -276,17 +312,15 @@ function toggleModal(view) {
   //when click on view button this passed as argument to view parameter
 
   var row = view.parentElement.parentElement; // getting parent data
-  // console.log(row);
+  
   var index = row.rowIndex - 1; //getting index of data
-  // console.log(index);
+  
   var dataLocal = JSON.parse(localStorage.getItem("MyList")); //find the array from local storage
-  // console.log(dataLocal);
+
   var obj_index = dataLocal[index]; //find the obj from local storage of that index
-  // console.log(obj_index);
 
   var modal = document.getElementById("myModal");
   var modaltable = document.getElementById("modalTable");
-  // console.log(modal);
 
   removeRow(); //calling function to remove modal data row for next entry
   //function for deleting privious row in modal table
@@ -338,3 +372,4 @@ function resetform() {
   document.getElementById("text").value = "";
   document.getElementById("time").value = "";
 }
+
