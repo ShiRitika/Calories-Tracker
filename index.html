@@ -15,16 +15,21 @@
       </h2>
     </div>
     <!------------------- header end-------------------->
-     <!------------ main section start-------------------->
+    <!------------ main section start-------------------->
     <div class="container">
       <div class="form-table-contain">
-        <form action="" onsubmit="return validateForm()">
+        <form id="myform" action="">
           <table id="table0">
             <tr>
               <td class="contact-firstcol">Meal List</td>
               <td class="contact-secondcol">:</td>
               <td class="contact-thirdcol" name="forms" id="container1">
-                <input type="radio" id="breakfast" name="meal" value="Breakfast"/>
+                <input
+                  type="radio"
+                  id="breakfast"
+                  name="meal"
+                  value="Breakfast"
+                />
                 <label for="meal" id="B">Breakfast</label>
                 <input type="radio" id="lunch" name="meal" value="Lunch" />
                 <label for="meal" id="L">Lunch</label>
@@ -36,7 +41,8 @@
             <tr>
               <td class="contact-firstcol"></td>
               <td class="contact-sec_error">:</td>
-              <td class="contact-thirdcol"><p id="invalid_meal" class="error"></p>
+              <td class="contact-thirdcol">
+                <p id="invalid_meal" class="error"></p>
               </td>
             </tr>
 
@@ -66,7 +72,7 @@
               <td class="contact-firstcol"></td>
               <td class="contact-sec_error">:</td>
               <td class="contact-thirdcol">
-              <p id="invalid_des" class="error"></p>
+                <p id="invalid_des" class="error"></p>
               </td>
             </tr>
 
@@ -75,6 +81,8 @@
               <td class="contact-secondcol">:</td>
               <td class="contact-thirdcol">
                 <select id="time">
+                  <option value="disabled">Select</option>
+
                   <option value="00:00">12.00 AM</option>
                   <option value="00:30">12.30 AM</option>
                   <option value="01:00">01.00 AM</option>
@@ -131,18 +139,18 @@
               <td class="contact-firstcol"></td>
               <td class="contact-sec_error">:</td>
               <td class="contact-thirdcol">
-              <p id="invalid_time" class="error"></p>
+                <p id="invalid_time" class="error"></p>
               </td>
             </tr>
           </table>
 
           <div id="button">
-            <input id="btn3" type="submit" value="Reset" />
-            <input id="btn4" type="reset" value="Submit" />
+            <input id="btn3" type="reset" value="Reset" />
+            <input id="btn4" type="submit" value="Submit" />
           </div>
         </form>
       </div>
-    <!----- div for image ----->
+      <!----- div for image ----->
       <div class="image-contain">
         <div id="img">
           <img
@@ -154,26 +162,27 @@
         </div>
       </div>
     </div>
-<!--------------------------- main section end---------------------->
+    <!--------------------------- main section end---------------------->
     <!------------------- code for summary part start------------------>
     <div id="summary">
       <h2>Summary</h2>
     </div>
-
-    <table id="tb">
-      <tr>
-        <th id="meal">Meal Type</th>
-        <th id="cal">Calories</th>
-        <th id="des">Description</th>
-        <th id="tim">Time</th>
-        <th>View</th>
-        <th>Edit</th>
-        <th>Delete</th>
+    <div class="table-container">
+      <table id="tb">
+        <tr>
+          <th id="meal">Meal Type</th>
+          <th id="cal">Calories</th>
+          <th id="des">Description</th>
+          <th id="tim">Time</th>
+          <th>View</th>
+          <th>Edit</th>
+          <th>Delete</th>
+        </tr>
+      </table>
+      <tr id="tr">
+        <div id="showdata"></div>
       </tr>
-    </table>
-    <tr id="tr">
-      <div id="showdata"></div>
-    </tr>
+    </div>
     <!-------------------/ code for summary part End--------------------->
 
     <!-----------------code for modal box star-------------------------->

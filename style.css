@@ -158,10 +158,9 @@ td {
 
 /*---------------------code for form container start---------------------- */
 .container {
-  margin-top: 40px;
-  margin-left: 250px;
-  margin-right: 250px;
-  width: 820px;
+  /* margin-top: 40px; */
+  margin: 30px auto ;
+  width: 60%;
   height: 300px;
   background-color: #98b6da;
   border-radius: 15px;
@@ -214,7 +213,6 @@ td {
 #tb {
   border-spacing: 0px;
   width: 850px;
-  margin-left: 240px;
 }
 
 #tb td,
@@ -264,4 +262,9 @@ td {
   text-align: center;
   border: 1px solid #98b6da;
   visibility: hidden;
+}
+
+.table-container{
+  margin: 10px auto;
+  width: 100%;
 }

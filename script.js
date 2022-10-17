@@ -23,12 +23,12 @@ function updateCountDown() {
 updateCountDown(); //calling function
 setInterval(updateCountDown, 1000); // set interval time of 1 sec
 
-var row = null; //global variables
+var row = null;
 let result = [];
 
 //---------------------------code for submit the form-----------------------------------
 const addResult = (event) => {
-  event.preventDefault(); //to stop the form submiting
+  event.preventDefault();
 
   //code for meal input
   let meal = document.getElementsByName("meal");
@@ -40,19 +40,19 @@ const addResult = (event) => {
   }
   let calories_value = document.getElementById("cal2");
   let description_value = document.getElementById("text").value;
-  console.log(description_value);
   let time_value = document.getElementById("time").value;
-  var r = "00:00";
+  var dis = "disabled";
 
-  let flag = 1; //set flag 1 so that form will submit
+  let flag = 1;
 
   validateForm(); //function calling validation
 
   //---------------------code for validating form------------------
   function validateForm() {
+  
     checkMeal();
     checkCalories();
-    checkData(); //calling func to check the data
+    checkData();
     checkDescription();
     checkTime();
 
@@ -60,7 +60,7 @@ const addResult = (event) => {
       if (str == "") {
         document.getElementById("invalid_meal").innerHTML =
           "Please Select meal!";
-        flag = 0; //set flag 0 to not submit form
+        flag = 0;
       } else {
         document.getElementById("invalid_meal").innerHTML = "";
         flag = 1;
@@ -105,7 +105,7 @@ const addResult = (event) => {
     }
 
     function checkTime() {
-      if (time_value == r) {
+      if (time_value == dis) {
         document.getElementById("invalid_time").innerHTML =
           "Please select Time!";
         flag = 0;
@@ -119,7 +119,6 @@ const addResult = (event) => {
         return false;
       }
     }
-    //if one of both field flag is 0 form will not submitted
     if (
       checkDescription() === false ||
       checkTime() === false ||
@@ -177,8 +176,6 @@ const addResult = (event) => {
           flag = 1;
         }
       }
-
-      //condition if flag= 1 return submit form else flag = 0 return not to submit form
       if (flag) {
         return true;
       } else {
@@ -199,12 +196,13 @@ const addResult = (event) => {
       time: document.getElementById("time").value,
     };
 
-    if (selectedIndex === -1) { //code for edit nd update
+    if (selectedIndex === -1) {
+      //code for edit nd update
       result.push(data);
     } else {
       result.splice(selectedIndex, 1, data);
     }
-    // result.push(data);
+
     document.forms[0].reset(); //to clear the form for the next entries
     //document.querySelector('form').reset();
 
@@ -215,7 +213,8 @@ const addResult = (event) => {
     var data2 = localStorage.getItem("MyList");
     var json_object = JSON.parse(data2);
 
-    if (json_object.length) { //getting array data which is selected
+    if (json_object.length) {
+      //getting array data which is selected
       var y = json_object[json_object.length - 1];
     }
 
@@ -228,9 +227,9 @@ const addResult = (event) => {
 
     //function to show data in table
     function showData() {
-      var table = document.getElementById("tb"); //get html table
+      var table = document.getElementById("tb");
       var data3 = y;
-      var row = table.insertRow(); //add new empty row in table
+      var row = table.insertRow();
       var cell1 = row.insertCell(0);
       var cell2 = row.insertCell(1);
       var cell3 = row.insertCell(2);
@@ -255,22 +254,17 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("btn4").addEventListener("click", addResult);
 });
 
-//-------------code for reset---------------------
-var btnClear = document.getElementById("btn3");
-btnClear.addEventListener("click", function deleteItems() {
-  localStorage.clear();
-});
-
 //---------------code for edit option selected row show entry in input field---------------
 var selectedIndex = -1;
 function onEditPressed(index) {
   selectedIndex = -1;
   row = index.parentElement.parentElement;
 
-  let Value1 = row.cells[0].innerHTML; //getting meal value from table cell
+  let Value1 = row.cells[0].innerHTML;
 
-  let Value = Value1.trim(); //value has whitespace se we need to trim it for further comarison
-  var meal_List = document.getElementsByName("meal"); //getting meal list
+  //value has whitespace se we need to trim it for further comparison
+  let Value = Value1.trim();
+  var meal_List = document.getElementsByName("meal");
 
   if (meal_List[0].value === Value) {
     meal_List[0].checked = Value;
@@ -283,11 +277,11 @@ function onEditPressed(index) {
   document.getElementById("cal2").value = row.cells[1].innerHTML;
   document.getElementById("text").value = row.cells[2].innerHTML;
   document.getElementById("time").value = row.cells[3].innerHTML;
-  var indexRow = row.rowIndex - 1; //find index of row
+  var indexRow = row.rowIndex - 1;
 
   selectedIndex = indexRow;
-  var v = JSON.parse(localStorage.getItem("MyList")); //find the array from local storage
-  
+  var v = JSON.parse(localStorage.getItem("MyList"));
+
   v.splice(indexRow, 1);
   localStorage.setItem("MyList", JSON.stringify(v));
 }
@@ -305,16 +299,16 @@ function update(formData) {
 }
 
 //------------------------code for viewing model box----------------------------------
-const modal = document.querySelector(".modal"); //taking modal box
-const closeButton = document.querySelector(".close-button"); //span element selected here
+const modal = document.querySelector(".modal");
+const closeButton = document.querySelector(".close-button");
 
 function toggleModal(view) {
   //when click on view button this passed as argument to view parameter
 
   var row = view.parentElement.parentElement; // getting parent data
-  
+
   var index = row.rowIndex - 1; //getting index of data
-  
+
   var dataLocal = JSON.parse(localStorage.getItem("MyList")); //find the array from local storage
 
   var obj_index = dataLocal[index]; //find the obj from local storage of that index
@@ -322,35 +316,27 @@ function toggleModal(view) {
   var modal = document.getElementById("myModal");
   var modaltable = document.getElementById("modalTable");
 
-  removeRow(); //calling function to remove modal data row for next entry
-  //function for deleting privious row in modal table
-  function removeRow() {
-    if (index >= 1) {
-      document.getElementById("modalTable").deleteRow(1);
-    } else {
-      return modaltable;
-    }
-  }
-
-  var row = modaltable.insertRow(); //inserting new row in a table
-  var cell1 = row.insertCell(0); //inserting cells
+  var row = modaltable.insertRow();
+  var cell1 = row.insertCell(0);
   var cell2 = row.insertCell(1);
   var cell3 = row.insertCell(2);
   var cell4 = row.insertCell(3);
 
-  cell1.innerHTML = obj_index.meal_type; //inserting values to each cell
+  cell1.innerHTML = obj_index.meal_type;
   cell2.innerHTML = obj_index.calories;
   cell3.innerHTML = obj_index.description;
   cell4.innerHTML = obj_index.time;
 
-  modal.classList.toggle("show-modal"); // display modal box
+  modal.classList.toggle("show-modal");
   //  modal.style.display = "block";
 }
 
-// When the user clicks on <span> (x), close the modal
+//---------------------------- close the modal--------------------
 closeButton.onclick = function () {
   // modal.style.display = "none";
   modal.classList.toggle("show-modal");
+  //delete previous row
+  document.getElementById("modalTable").deleteRow(1);
 };
 
 //-----------------code for delete button in a table----------------------------------
@@ -362,14 +348,12 @@ function onDelete(td) {
   dataLocal.splice(objLocal, 1); // remove that perticular index entry
   localStorage.setItem("MyList", JSON.stringify(dataLocal)); //save getdata back to local storage
   document.getElementById("tb").deleteRow(row.rowIndex); //delete row from UI
-  resetform();
 }
 
-//----------------------when delete data form get reset-----------------------------------
+//-------------------------code for reset button---------------------
+var btnClear = document.getElementById("btn3");
+
+btnClear.addEventListener("click", resetform);
 function resetform() {
-  document.getElementsByName("meal").checked = false;
-  document.getElementById("cal2").value = "";
-  document.getElementById("text").value = "";
-  document.getElementById("time").value = "";
+  document.getElementById("myform").reset();
 }
-
