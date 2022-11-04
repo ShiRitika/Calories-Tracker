@@ -5,11 +5,12 @@
     <!--linking css-->
     <link href="style.css" rel="stylesheet" />
     <!--/linking css-->
+
   </head>
   <body>
     <!------------------- header start-------------------->
     <div class="format1">
-      <h1 style="text-align: center">Track Your Calories</h1>
+      <h1 id="track">Track Your Calories</h1>
       <h2 style="font-size: 25px; margin-bottom: 0px">
         <p id="countdown">00:00:00</p>
       </h2>
@@ -18,7 +19,7 @@
     <!------------ main section start-------------------->
     <div class="container">
       <div class="form-table-contain">
-        <form id="myform" action="">
+        <form id="myform" action="" method="">
           <table id="table0">
             <tr>
               <td class="contact-firstcol">Meal List</td>
@@ -29,11 +30,12 @@
                   id="breakfast"
                   name="meal"
                   value="Breakfast"
+                  class="radio"
                 />
                 <label for="meal" id="B">Breakfast</label>
-                <input type="radio" id="lunch" name="meal" value="Lunch" />
+                <input type="radio" id="lunch" name="meal" value="Lunch" class="radio" />
                 <label for="meal" id="L">Lunch</label>
-                <input type="radio" id="dinner" name="meal" value="Dinner" />
+                <input type="radio" id="dinner" name="meal" value="Dinner" class="radio" />
                 <label for="meal" id="D">Dinner</label>
               </td>
             </tr>
@@ -50,7 +52,7 @@
               <td class="contact-firstcol">Calories</td>
               <td class="contact-secondcol">:</td>
               <td class="contact-thirdcol">
-                <input id="cal2" type="number" placeholder="calories" />
+                <input id="cal2" type="number" placeholder="calories" class="some"/>
               </td>
             </tr>
 

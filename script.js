@@ -20,11 +20,43 @@ function updateCountDown() {
   seconds = seconds < 10 ? (seconds = "0" + seconds) : seconds;
   countDownElement.innerHTML = `${hour} : ${minutes} : ${seconds} ${session}`;
 }
+
 updateCountDown(); //calling function
 setInterval(updateCountDown, 1000); // set interval time of 1 sec
 
-var row = null;
+document.getElementById("breakfast").onclick = function () {
+  document.getElementById("invalid_meal").innerHTML = "";
+};
+document.getElementById("lunch").onclick = function () {
+  document.getElementById("invalid_meal").innerHTML = "";
+};
+document.getElementById("dinner").onclick = function () {
+  document.getElementById("invalid_meal").innerHTML = "";
+};
+
+let calories = document.getElementById("cal2");
+calories.addEventListener("keyup", caloriesHandle);
+function caloriesHandle() {
+  document.getElementById("invalid").innerHTML = "";
+};
+
+let text = document.getElementById("text");
+text.addEventListener("keyup", textHandle);
+function textHandle() {
+  document.getElementById("invalid_des").innerHTML = "";
+};
+
+document.getElementById("time").onclick = function () {
+  document.getElementById("invalid_time").innerHTML = "";
+};
+
+var row;
 let result = [];
+var y;
+var select;
+if (row == null) {
+  showData1();
+}
 
 //---------------------------code for submit the form-----------------------------------
 const addResult = (event) => {
@@ -32,8 +64,8 @@ const addResult = (event) => {
 
   //code for meal input
   let meal = document.getElementsByName("meal");
-  var str = "";
-  for (var i = 0; i < meal.length; i++) {
+  let str = "";
+  for (let i = 0; i < meal.length; i++) {
     if (meal[i].checked == true) {
       str += meal[i].value + " ";
     }
@@ -41,7 +73,7 @@ const addResult = (event) => {
   let calories_value = document.getElementById("cal2");
   let description_value = document.getElementById("text").value;
   let time_value = document.getElementById("time").value;
-  var dis = "disabled";
+  const dis = "disabled";
 
   let flag = 1;
 
@@ -49,7 +81,6 @@ const addResult = (event) => {
 
   //---------------------code for validating form------------------
   function validateForm() {
-  
     checkMeal();
     checkCalories();
     checkData();
@@ -188,6 +219,16 @@ const addResult = (event) => {
   breakme: if (flag === 0) {
     break breakme;
   } else {
+    //-------------on page refresh delete data from table--------------------
+    if (select === 1) {
+      let table = document.getElementById("tb");
+      let data2 = localStorage.getItem("MyList");
+      let json_object = JSON.parse(data2);
+      for (let i = json_object.length; i >= 1; i--) {
+        table.deleteRow(i);
+      }
+    }
+
     //storing data into object form
     let data = {
       meal_type: str,
@@ -196,26 +237,25 @@ const addResult = (event) => {
       time: document.getElementById("time").value,
     };
 
-    if (selectedIndex === -1) {
+    if (selectedIndex === -1 || Index === -1) {
       //code for edit nd update
+      result.push(data);
+    } else if (Index === 1 && selectedIndex !== -1) {
+      // result.splice(selectedIndex, 1);
       result.push(data);
     } else {
       result.splice(selectedIndex, 1, data);
     }
 
-    document.forms[0].reset(); //to clear the form for the next entries
-    //document.querySelector('form').reset();
-
+    document.forms[0].reset(); //to clear the form for the next entries  //document.querySelector('form').reset();
     //saving to localstorage
     localStorage.setItem("MyList", JSON.stringify(result));
-
     //getting data from local storage
-    var data2 = localStorage.getItem("MyList");
-    var json_object = JSON.parse(data2);
-
+    let data2 = localStorage.getItem("MyList");
+    let json_object = JSON.parse(data2);
     if (json_object.length) {
       //getting array data which is selected
-      var y = json_object[json_object.length - 1];
+      y = json_object[json_object.length - 1];
     }
 
     //if data in show table or update
@@ -225,18 +265,18 @@ const addResult = (event) => {
       update(json_object);
     }
 
-    //function to show data in table
+    // //function to show data in table
     function showData() {
-      var table = document.getElementById("tb");
-      var data3 = y;
-      var row = table.insertRow();
-      var cell1 = row.insertCell(0);
-      var cell2 = row.insertCell(1);
-      var cell3 = row.insertCell(2);
-      var cell4 = row.insertCell(3);
-      var actioncell = row.insertCell(4);
-      var actioncell2 = row.insertCell(5);
-      var actioncell3 = row.insertCell(6);
+      let table = document.getElementById("tb");
+      let data3 = y;
+      let row = table.insertRow();
+      let cell1 = row.insertCell(0);
+      let cell2 = row.insertCell(1);
+      let cell3 = row.insertCell(2);
+      let cell4 = row.insertCell(3);
+      let actioncell = row.insertCell(4);
+      let actioncell2 = row.insertCell(5);
+      let actioncell3 = row.insertCell(6);
 
       cell1.innerHTML = data3.meal_type;
       cell2.innerHTML = data3.calories;
@@ -245,6 +285,7 @@ const addResult = (event) => {
       actioncell.innerHTML = `<button id="viewbtn" class="trigger" onclick="toggleModal(this)">View</button>`;
       actioncell2.innerHTML = `<button id="editbtn" onclick="onEditPressed(this)">Edit</button>`;
       actioncell3.innerHTML = `<button id="deletebtn" onclick="onDelete(this)">Delete</button>`;
+      select = 0;
     }
   }
 };
@@ -259,9 +300,7 @@ var selectedIndex = -1;
 function onEditPressed(index) {
   selectedIndex = -1;
   row = index.parentElement.parentElement;
-
   let Value1 = row.cells[0].innerHTML;
-
   //value has whitespace se we need to trim it for further comparison
   let Value = Value1.trim();
   var meal_List = document.getElementsByName("meal");
@@ -280,6 +319,7 @@ function onEditPressed(index) {
   var indexRow = row.rowIndex - 1;
 
   selectedIndex = indexRow;
+  Index = 2;
   var v = JSON.parse(localStorage.getItem("MyList"));
 
   v.splice(indexRow, 1);
@@ -296,39 +336,33 @@ function update(formData) {
   row.cells[2].innerHTML = updateData.description;
   row.cells[3].innerHTML = updateData.time;
   row = null;
-}
+  selectedIndex = -1;
+};
 
 //------------------------code for viewing model box----------------------------------
 const modal = document.querySelector(".modal");
 const closeButton = document.querySelector(".close-button");
-
 function toggleModal(view) {
   //when click on view button this passed as argument to view parameter
-
   var row = view.parentElement.parentElement; // getting parent data
+  let index = row.rowIndex - 1; //getting index of data
+  let dataLocal = JSON.parse(localStorage.getItem("MyList")); //find the array from local storage
+  let obj_index = dataLocal[index]; //find the obj from local storage of that index
+  let modal = document.getElementById("myModal");
+  let modaltable = document.getElementById("modalTable");
 
-  var index = row.rowIndex - 1; //getting index of data
-
-  var dataLocal = JSON.parse(localStorage.getItem("MyList")); //find the array from local storage
-
-  var obj_index = dataLocal[index]; //find the obj from local storage of that index
-
-  var modal = document.getElementById("myModal");
-  var modaltable = document.getElementById("modalTable");
-
-  var row = modaltable.insertRow();
-  var cell1 = row.insertCell(0);
-  var cell2 = row.insertCell(1);
-  var cell3 = row.insertCell(2);
-  var cell4 = row.insertCell(3);
+  row = modaltable.insertRow();
+  let cell1 = row.insertCell(0);
+  let cell2 = row.insertCell(1);
+  let cell3 = row.insertCell(2);
+  let cell4 = row.insertCell(3);
 
   cell1.innerHTML = obj_index.meal_type;
   cell2.innerHTML = obj_index.calories;
   cell3.innerHTML = obj_index.description;
   cell4.innerHTML = obj_index.time;
-
   modal.classList.toggle("show-modal");
-  //  modal.style.display = "block";
+  selectedIndex = -1;
 }
 
 //---------------------------- close the modal--------------------
@@ -340,20 +374,58 @@ closeButton.onclick = function () {
 };
 
 //-----------------code for delete button in a table----------------------------------
+var Index = -1;
 function onDelete(td) {
   row = td.parentElement.parentElement; //find row
-  var index = row.rowIndex - 1; //find the index of the row
-  var dataLocal = JSON.parse(localStorage.getItem("MyList")); //find the array from local storage
-  var objLocal = dataLocal[index]; //find the obj from local storage of that index
-  dataLocal.splice(objLocal, 1); // remove that perticular index entry
+  let index = row.rowIndex - 1; //find the index of the row
+  let dataLocal = JSON.parse(localStorage.getItem("MyList")); //find the array from local storage
+  // let objLocal = dataLocal[index]; //find the obj from local storage of that index
+  dataLocal.splice(index, 1); // remove that perticular index entry
   localStorage.setItem("MyList", JSON.stringify(dataLocal)); //save getdata back to local storage
   document.getElementById("tb").deleteRow(row.rowIndex); //delete row from UI
-}
+  row = null;
+  selectedIndex = index;
+  result.splice(selectedIndex, 1);
+  Index = 1;
+};
 
 //-------------------------code for reset button---------------------
-var btnClear = document.getElementById("btn3");
-
+const btnClear = document.getElementById("btn3");
 btnClear.addEventListener("click", resetform);
 function resetform() {
+  document.getElementById("invalid_meal").innerHTML = "";
+  document.getElementById("invalid").innerHTML = "";
+  document.getElementById("invalid_des").innerHTML = "";
+  document.getElementById("invalid_time").innerHTML = "";
   document.getElementById("myform").reset();
-}
+};
+
+//----------------function to show data in table on page load---------------------------
+function showData1() {
+  let table = document.getElementById("tb");
+  let data2 = localStorage.getItem("MyList");
+  if (!data2) {
+    data2 = [];
+  } else {
+    let json_object = JSON.parse(data2);
+    for (let i = 0; i < json_object.length; i++) {
+      let row = table.insertRow();
+      let cell1 = row.insertCell(0);
+      let cell2 = row.insertCell(1);
+      let cell3 = row.insertCell(2);
+      let cell4 = row.insertCell(3);
+      let actioncell = row.insertCell(4);
+      let actioncell2 = row.insertCell(5);
+      let actioncell3 = row.insertCell(6);
+
+      cell1.innerHTML = json_object[i].meal_type;
+      cell2.innerHTML = json_object[i].calories;
+      cell3.innerHTML = json_object[i].description;
+      cell4.innerHTML = json_object[i].time;
+      actioncell.innerHTML = `<button id="viewbtn" class="trigger" onclick="toggleModal(this)">View</button>`;
+      actioncell2.innerHTML = `<button id="editbtn" onclick="onEditPressed(this)">Edit</button>`;
+      actioncell3.innerHTML = `<button id="deletebtn" onclick="onDelete(this)">Delete</button>`;
+    }
+    select = 1;
+  }
+};
