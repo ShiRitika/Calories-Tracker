@@ -350,7 +350,6 @@ function toggleModal(view) {
   let obj_index = dataLocal[index]; //find the obj from local storage of that index
   let modal = document.getElementById("myModal");
   let modaltable = document.getElementById("modalTable");
-
   row = modaltable.insertRow();
   let cell1 = row.insertCell(0);
   let cell2 = row.insertCell(1);
@@ -372,6 +371,7 @@ closeButton.onclick = function () {
   //delete previous row
   document.getElementById("modalTable").deleteRow(1);
 };
+
 
 //-----------------code for delete button in a table----------------------------------
 var Index = -1;
